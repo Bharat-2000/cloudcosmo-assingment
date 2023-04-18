@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import Switch from "@mui/material/Switch";
+import { Switch, FormControlLabel } from "@mui/material";
 
 function Folder({
     handleInsertNode,
@@ -76,22 +76,26 @@ function Folder({
                             options={data}
                             sx={{ width: 200 }}
                             renderInput={(params) => (
-                                <TextField {...params} placeholder="Select Extension" />
+                                <TextField {...params} placeholder="Select Datatype" />
                             )}
                             onChange={(e, val) => handleDataType(val)}
+                            style={{ margin: '0px 5px' }}
                         />
                         <button
                             disabled={datatype != "object" ? true : false}
                             onClick={(e) => handleNewFolder(e, true)}
+                            style={{ margin: '0px 5px' }}
                         >
                             Add +
                         </button>
                         {/* <button onClick={(e) => handleNewFolder(e, false)}>File +</button> */}
-                        <Switch {...label} />
-                        <button onClick={(e) => deleteFileFolderHandler(e)}>
+                        {/* <Switch {...label} helperText="Required Feild"/> */}
+                        <FormControlLabel required control={<Switch />} label="Required" style={{ margin: '0px 5px' }} />
+                        <button onClick={(e) => deleteFileFolderHandler(e)} style={{ margin: '0px 5px' }}>
                             Delete -
                         </button>
                         <button
+                            style={{ margin: '0px 5px' }}
                             onClick={(e) => setShowRename(true)}
                         >
                             Edit
