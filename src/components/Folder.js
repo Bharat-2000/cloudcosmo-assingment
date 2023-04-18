@@ -29,6 +29,9 @@ function Folder({ handleInsertNode, explorer }) {
     const handleDataType = (value) => {
         setDatatype(value);
     };
+    const handleEdit = (value) => {
+
+    }
     const data = ["boolean", "string", "number", "object"];
     if (explorer.isFolder) {
         return (
@@ -60,11 +63,11 @@ function Folder({ handleInsertNode, explorer }) {
                         </button>
                         {/* <button onClick={(e) => handleNewFolder(e, false)}>File +</button> */}
                         <Switch {...label} />
-                        <button
-                            disabled={datatype != "object" ? true : false}
-                            onClick={(e) => handleNewFolder(e, true)}
-                        >
+                        <button>
                             Delete -
+                        </button>
+                        <button onClick={(e, val) => handleEdit(explorer.id, value)}>
+                            Edit
                         </button>
                     </div>
                 </div>
