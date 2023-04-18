@@ -3,12 +3,18 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Switch from "@mui/material/Switch";
 
-function Folder({ handleInsertNode, explorer }) {
+function Folder({
+    handleInsertNode,
+    explorer,
+    updateNodeHandler,
+    deleteNodeHandler
+}) {
     const [expand, setExpand] = useState(false);
     const [showInput, setShowInput] = useState({
         visible: false,
         isFolder: null,
     });
+    const [showRename, setShowRename] = useState(false);
     const label = { inputProps: { "aria-label": "Required" } };
     const [datatype, setDatatype] = useState("");
     const handleNewFolder = (e, isFolder) => {
@@ -29,9 +35,16 @@ function Folder({ handleInsertNode, explorer }) {
     const handleDataType = (value) => {
         setDatatype(value);
     };
-    const handleEdit = (value) => {
+    const renameFileFolder = (e) => {
+        if (e.target.value.trim() && e.keyCode === 13) {
+            setShowRename(false);
+            updateNodeHandler(explorer.id, e.target.value.trim());
+        }
+    };
 
-    }
+    const deleteFileFolderHandler = () => {
+        deleteNodeHandler(explorer.id);
+    };
     const data = ["boolean", "string", "number", "object"];
     if (explorer.isFolder) {
         return (
@@ -41,7 +54,19 @@ function Folder({ handleInsertNode, explorer }) {
                     style={{ display: "flex", flexDirection: "row" }}
                     onClick={() => setExpand(!expand)}
                 >
-                    <span> 📁{explorer.name}</span>
+                    {showRename && (
+                        <input
+                            onKeyDown={(e) => renameFileFolder(e)}
+                            autoFocus
+                            className="input__newFileFolder"
+                            type="text"
+                            defaultValue={explorer.name}
+                            onBlur={() => {
+                                setShowRename(false);
+                            }}
+                        ></input>
+                    )}
+                    {!showRename && <span> 📁{explorer.name}</span>}
                     <div>
                         <Autocomplete
                             disableClearable
@@ -63,10 +88,12 @@ function Folder({ handleInsertNode, explorer }) {
                         </button>
                         {/* <button onClick={(e) => handleNewFolder(e, false)}>File +</button> */}
                         <Switch {...label} />
-                        <button>
+                        <button onClick={(e) => deleteFileFolderHandler(e)}>
                             Delete -
                         </button>
-                        <button onClick={(e, val) => handleEdit(explorer.id, value)}>
+                        <button
+                            onClick={(e) => setShowRename(true)}
+                        >
                             Edit
                         </button>
                     </div>
@@ -91,6 +118,8 @@ function Folder({ handleInsertNode, explorer }) {
                             <Folder
                                 handleInsertNode={handleInsertNode}
                                 explorer={item}
+                                updateNodeHandler={updateNodeHandler}
+                                deleteNodeHandler={deleteNodeHandler}
                                 key={item.id}
                             />
                         );

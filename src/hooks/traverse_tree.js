@@ -35,7 +35,12 @@ const useTraverseTree = () => {
             delete tree.isFolder;
             return tree;
         }
-    };
+        let latestNode = [];
+        let filteredNodes = tree.items.filter((ob) => ob.id !== folderId);
+        latestNode = filteredNodes.map(ob => deleteNode(ob, folderId));
+
+        return { ...tree, items: latestNode };
+    }
     return { insertNode, updateNode, deleteNode };
 }
 
