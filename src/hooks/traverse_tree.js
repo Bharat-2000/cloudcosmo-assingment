@@ -95,7 +95,7 @@ const useTraverseTree = () => {
     //     return { ...tree, items: latestNode };
     // }
 
-    //error with the code is that if we delete the last child the entire tree gets deleted
+    //error with the code is that if we delete the last child the entire tree gets deleted - running code
     function deleteNode(tree, folderId) {
         if (tree.id === folderId) {
             return null; // remove this node from the tree
