@@ -48,7 +48,7 @@ function Folder({
     const data = ["boolean", "string", "number", "object"];
     if (explorer.isFolder) {
         return (
-            <div style={{ marginTop: 5, width: "200px" }}>
+            <div style={{ marginTop: 5, width: "fitContent" }}>
                 <div
                     className="folder"
                     style={{ display: "flex", flexDirection: "row" }}
@@ -74,7 +74,6 @@ function Folder({
                             id="nested-combo-box"
                             value={datatype}
                             options={data}
-                            sx={{ width: 200 }}
                             renderInput={(params) => (
                                 <TextField {...params} placeholder="Select Datatype" />
                             )}
