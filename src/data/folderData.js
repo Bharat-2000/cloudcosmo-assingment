@@ -2,6 +2,7 @@ const explorer = {
     id: "1",
     name: "parent folder",
     isFolder: true,
+    isDelete: false,
     items: [
         // {
         //   id:"2",

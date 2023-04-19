@@ -87,10 +87,9 @@ function Folder({
                         >
                             Add +
                         </button>
-                        {/* <button onClick={(e) => handleNewFolder(e, false)}>File +</button> */}
                         {/* <Switch {...label} helperText="Required Feild"/> */}
                         <FormControlLabel required control={<Switch />} label="Required" style={{ margin: '0px 5px' }} />
-                        <button onClick={(e) => deleteFileFolderHandler(e)} style={{ margin: '0px 5px' }}>
+                        <button disabled={explorer.isDelete===false ? true : false} onClick={(e) => deleteFileFolderHandler(e)} style={{ margin: '0px 5px' }}>
                             Delete -
                         </button>
                         <button
