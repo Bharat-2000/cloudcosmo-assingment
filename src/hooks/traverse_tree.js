@@ -96,24 +96,58 @@ const useTraverseTree = () => {
     // }
 
     //error with the code is that if we delete the last child the entire tree gets deleted - running code
+    // function deleteNode(tree, folderId) {
+    //     if (tree.id === folderId) {
+    //         return null; // remove this node from the tree
+    //     }
+
+    //     const items = tree.items;
+    //     const index = items.findIndex(ob => ob.id === folderId); // find the index of the node with the given folderId
+    //     if (index !== -1) {
+    //         items.splice(index, 1); // remove the node at the given index from the array
+    //     }
+
+    //     const updatedNodes = items
+    //         .map(ob => deleteNode(ob, folderId))
+    //         .filter(ob => ob !== null); // recursively delete child nodes that match the folderId and remove the null values
+
+    //     return {
+    //         ...tree,
+    //         items: updatedNodes // update the child nodes of this node
+    //     };
+    // }
+
+
     function deleteNode(tree, folderId) {
         if (tree.id === folderId) {
-            return null; // remove this node from the tree
+            delete tree.name;
+            delete tree.items;
+            delete tree.isFolder;
+            return tree;
         }
 
-        const items = tree.items;
-        const index = items.findIndex(ob => ob.id === folderId); // find the index of the node with the given folderId
-        if (index !== -1) {
-            items.splice(index, 1); // remove the node at the given index from the array
+        let latestNode = [];
+        let items = tree.items || [];
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].id === folderId) {
+                items.splice(i, 1);
+                i--; // decrement index after removing an element
+            } else {
+                let updatedNode = deleteNode(items[i], folderId);
+                if (updatedNode) {
+                    latestNode.push(updatedNode);
+                }
+            }
         }
 
-        const updatedNodes = items
-            .map(ob => deleteNode(ob, folderId))
-            .filter(ob => ob !== null); // recursively delete child nodes that match the folderId and remove the null values
+        if (latestNode.length === 0 && !tree.isFolder) {
+            return null; // remove this node from the tree if it's a leaf node and all of its child nodes have been removed
+        }
 
         return {
             ...tree,
-            items: updatedNodes // update the child nodes of this node
+            items: latestNode // update the child nodes of this node
         };
     }
 
