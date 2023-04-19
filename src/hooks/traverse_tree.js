@@ -50,7 +50,7 @@
 const useTraverseTree = () => {
     function insertNode(tree, folderId, itemName, isFolder) {
         if (tree.id === folderId && tree.isFolder) {
-            tree.items.unshift({
+            tree.items.push({
                 id: new Date().getTime(),
                 name: itemName,
                 isFolder,
